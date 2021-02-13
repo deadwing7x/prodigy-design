@@ -1,0 +1,67 @@
+#home {
+  text-align: center;
+  font-family: "Montserrat";
+  margin-top: 2rem;
+}
+
+.labelText {
+  font-size: 20px;
+  font-weight: 500;
+  font-style: italic;
+  margin-right: 2rem;
+}
+
+#firstLabel {
+  margin-left: 37px;
+}
+
+.filter-fields {
+  width: 300px;
+  height: 30px;
+  font-size: 20px;
+}
+
+#users {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.users-table {
+  width: 800px;
+  text-align: center;
+  border: 3px solid black;
+}
+
+.table-head {
+  border-bottom: 2px solid black;
+}
+
+.head {
+  font-size: 26px !important;
+  font-weight: 800;
+}
+
+.table-column {
+  border-right: 2px solid black;
+  border-bottom: 2px solid black;
+  margin: 1rem 1rem 1rem 1rem;
+  font-size: 22px;
+  height: 45px;
+}
+
+.blog-links {
+  background: linear-gradient(to right, orange, orange 50%, black 50%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 100%;
+  transition: background-position 800ms ease;
+  background-position: 100%;
+  font-family: sans-serif;
+  font-weight: 500;
+}
+
+.blog-links:hover {
+  background-position: 0 100%;
+}
