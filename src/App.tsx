@@ -103,9 +103,13 @@ const App: React.FC<{}> = () => {
                 </Link>
                 <span className="theme" onClick={toggleTheme}>
                   {themeName === "dark" ? (
-                    <span className="theme-selector">🌚</span>
+                    <span className="theme-selector">
+                      <i className="far fa-moon"></i>
+                    </span>
                   ) : (
-                    <span className="theme-selector">🌞</span>
+                    <span className="theme-selector">
+                      <i className="far fa-sun"></i>
+                    </span>
                   )}
                 </span>
                 <Route path="/" exact component={Home}></Route>
