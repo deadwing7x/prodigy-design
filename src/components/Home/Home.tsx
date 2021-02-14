@@ -1,18 +1,19 @@
 import React, { CSSProperties, useContext, useEffect, useState } from "react";
+import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { IUser } from "../../model/IUser";
 import ThemeContext from "../../ThemeContext";
 import UserContext from "../../UserContext";
 import "./Home.scss";
 
-interface TableProps {
+interface UserProps {
   columns: string[];
   users: IUser[];
   style: CSSProperties;
   navLinkStyles: CSSProperties;
 }
 
-const Table: React.FC<TableProps> = (props: TableProps) => {
+const Table: React.FC<UserProps> = (props: UserProps) => {
   return (
     <table className="users-table" style={props.style}>
       <thead className="table-head">
@@ -58,36 +59,116 @@ const Table: React.FC<TableProps> = (props: TableProps) => {
   );
 };
 
+const Cards: React.FC<UserProps> = (props: UserProps) => {
+  return (
+    <div className="user-cards">
+      {props.users.map((user, i) => {
+        return (
+          <Card key={i} style={props.style}>
+            <Card.Body>
+              <Card.Title>{user.name}</Card.Title>
+              <Card.Subtitle className="mb-2">
+                {user.company.name}
+              </Card.Subtitle>
+              <div>
+                <p>{user.phone}</p>
+                <p>{user.email}</p>
+                <Link
+                  className="blog-links"
+                  style={props.navLinkStyles}
+                  to={`/posts/:${user.id}`}
+                >
+                  <span title="View blogs posted by this user">
+                    View Blogs <i className="fas fa-blog"></i>
+                  </span>
+                </Link>
+              </div>
+            </Card.Body>
+          </Card>
+        );
+      })}
+    </div>
+  );
+};
+
+const getWindowDimensions = () => {
+  const { innerWidth: width, innerHeight: height } = window;
+  return {
+    width,
+    height,
+  };
+};
+
 const Home: React.FC<{}> = () => {
   const users = useContext(UserContext);
   const themeType = useContext(ThemeContext);
   const columns: string[] = ["#", "Name", "Company", "Blog Posts"];
   const [filteredUsers, setFilteredUsers] = useState<IUser[]>([]);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
 
   const themeColors: any = {
-    light: {},
-    dark: {
-      borderColor: "#fefefe",
-      borderBottomColor: "#fefefe",
-      borderRightColor: "#fefefe",
-      color: "fefefe",
+    table: {
+      light: {},
+      dark: {
+        borderColor: "#fefefe",
+        borderBottomColor: "#fefefe",
+        borderRightColor: "#fefefe",
+        color: "fefefe",
+      },
+    },
+    card: {
+      light: {},
+      dark: {
+        color: "fefefe",
+        backgroundColor: "#1a1a1a",
+        borderColor: "#ffff",
+      },
     },
   };
 
   const navLinksColors: any = {
-    light: {
-      color: "#1a1a1a",
-      textDecoration: 'none'
+    table: {
+      light: {
+        color: "#1a1a1a",
+        textDecoration: "none",
+      },
+      dark: {
+        color: "#fefefe",
+        textDecoration: "none",
+      },
     },
-    dark: {
-      color: "#fefefe",
-      textDecoration: 'none'
+    card: {
+      light: {
+        color: "#1a1a1a",
+        textDecoration: "none",
+      },
+      dark: {
+        color: "#fefefe",
+        textDecoration: "none",
+      },
     },
   };
 
   useEffect(() => {
+    const handleResize = () => {
+      setWindowDimensions(getWindowDimensions());
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    if (windowDimensions.width < 450) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+
     setFilteredUsers(users);
-  }, [users]);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, [users, windowDimensions]);
 
   const searchByInput = (input: string, key: string) => {
     if (input === null) {
@@ -111,7 +192,7 @@ const Home: React.FC<{}> = () => {
 
   return (
     <div id="home">
-      <div className='filter-div'>
+      <div className="filter-div">
         <label
           className="labelText"
           id="firstLabel"
@@ -142,18 +223,37 @@ const Home: React.FC<{}> = () => {
         />
       </div>
       <div className="col-md-12" id="users">
-        <Table
-          style={
-            themeType.theme === "dark" ? themeColors.dark : themeColors.light
-          }
-          navLinkStyles={
-            themeType.theme === "dark"
-              ? navLinksColors.dark
-              : navLinksColors.light
-          }
-          columns={columns}
-          users={filteredUsers}
-        />
+        {isMobile ? (
+          <Cards
+            columns={columns}
+            style={
+              themeType.theme === "dark"
+                ? themeColors.card.dark
+                : themeColors.card.light
+            }
+            navLinkStyles={
+              themeType.theme === "dark"
+                ? navLinksColors.card.dark
+                : navLinksColors.card.light
+            }
+            users={filteredUsers}
+          />
+        ) : (
+          <Table
+            style={
+              themeType.theme === "dark"
+                ? themeColors.table.dark
+                : themeColors.table.light
+            }
+            navLinkStyles={
+              themeType.theme === "dark"
+                ? navLinksColors.table.dark
+                : navLinksColors.table.light
+            }
+            columns={columns}
+            users={filteredUsers}
+          />
+        )}
       </div>
     </div>
   );

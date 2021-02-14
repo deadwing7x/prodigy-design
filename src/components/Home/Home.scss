@@ -39,6 +39,14 @@ $phone-width: 320px;
   margin-top: 1rem;
 }
 
+.users-cards {
+  margin-top: 1rem;
+}
+
+.card {
+  margin-bottom: 1rem;
+}
+
 .table-head {
   border-bottom: 2px solid;
   border-bottom-color: black;
@@ -74,18 +82,15 @@ $phone-width: 320px;
   }
 }
 
+@media (max-width: #{$tablet-width}) and (min-width: #{$largephone-width}) {
+  .blog-links {
+    font-size: 20px;
+  }
+}
+
 @media (max-width: #{$largephone-width}) and (min-width: #{$phone-width}) {
   .head {
     font-size: 20px !important;
-  }
-  
-  .table-column {
-    font-size: 18px;
-    height: 25px;
-  }
-  
-  .blog-links {
-    font-size: 16px;
   }
 
   .filter-fields {
@@ -93,7 +98,7 @@ $phone-width: 320px;
     height: 30px;
     font-size: 16px;
   }
-  
+
   .filter-div {
     margin-bottom: 1rem;
   }
