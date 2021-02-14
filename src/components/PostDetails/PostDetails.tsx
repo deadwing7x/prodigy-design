@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { IComment } from "../../model/IComment";
 import PostContext from "../../PostContext";
+import ThemeContext from "../../ThemeContext";
 import UserContext from "../../UserContext";
 import "./PostDetails.scss";
 
@@ -14,6 +15,7 @@ const PostDetails: React.FC<{}> = () => {
   let history = useHistory();
   const posts = useContext(PostContext);
   const users = useContext(UserContext);
+  const themeType = useContext(ThemeContext);
   const [comments, setComments] = useState<IComment[]>([]);
   const [deleteClicked, setDeleteClicked] = useState<boolean>(false);
 
@@ -51,6 +53,15 @@ const PostDetails: React.FC<{}> = () => {
       .catch((err) => {
         console.error("Failed to delete post! Please try again later.", err);
       });
+  };
+
+  const commentStyle: any = {
+    light: {
+      borderBottomColor: "black",
+    },
+    dark: {
+      borderBottomColor: "white",
+    },
   };
 
   return (
@@ -93,7 +104,15 @@ const PostDetails: React.FC<{}> = () => {
               <p className="comments-text">Comments:</p>
               {comments.map((comment, i) => {
                 return (
-                  <div className="single-comment" key={i}>
+                  <div
+                    className="single-comment"
+                    key={i}
+                    style={
+                      themeType.theme === "dark"
+                        ? commentStyle.dark
+                        : commentStyle.light
+                    }
+                  >
                     <div className="comment-name">
                       <strong>Name:</strong> {comment.name}
                     </div>

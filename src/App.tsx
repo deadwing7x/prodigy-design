@@ -9,11 +9,13 @@ import Posts from "./components/Posts/Posts";
 import { IPost } from "./model/IPost";
 import PostContext from "./PostContext";
 import PostDetails from "./components/PostDetails/PostDetails";
+import ThemeContext, { ThemeName } from "./ThemeContext";
 
 const App: React.FC<{}> = () => {
   const baseUrl: string = "https://jsonplaceholder.typicode.com";
   const [users, setUsers] = useState<IUser[]>([]);
   const [posts, setPosts] = useState<IPost[]>([]);
+  const [themeName, setThemeName] = React.useState<ThemeName>("light");
 
   const getUsers = () => {
     const request = axios.get(`${baseUrl}/users`);
@@ -25,6 +27,10 @@ const App: React.FC<{}> = () => {
     const request = axios.get(`${baseUrl}/posts`);
 
     return request;
+  };
+
+  const setTheme = (name: ThemeName) => {
+    setThemeName(name);
   };
 
   useEffect(() => {
@@ -45,30 +51,77 @@ const App: React.FC<{}> = () => {
       });
   }, []);
 
+  const toggleTheme = () => {
+    themeName === "dark" ? setTheme("light") : setTheme("dark");
+  };
+
+  const appNameStyle: any = {
+    light: {
+      color: "#5a3201",
+    },
+    dark: {
+      color: "#ca940a",
+    },
+  };
+
+  const appBackGround: any = {
+    light: {
+      backgroundColor: "#fefefe",
+      transition: `all 500ms ease-in-out`,
+    },
+    dark: {
+      backgroundColor: "#1a1a1a",
+      color: "#fefefe",
+      transition: `all 500ms ease-in-out`,
+    },
+  };
+
   return (
-    <UserContext.Provider value={users}>
-      <PostContext.Provider value={posts}>
-        <Switch>
-          <div className="App jumbotron">
-            <a href="/" className="app-name">
-              Prodigy Design
-            </a>
-            <Route path="/" exact component={Home}>
-              <Home />
-            </Route>
-            <Route path="/posts/:id" exact component={Posts}>
-              <Posts />
-            </Route>
-            <Route path="/posts" exact component={Posts}>
-              <Posts />
-            </Route>
-            <Route path="/post-details/:id" exact component={PostDetails}>
-              <PostDetails />
-            </Route>
-          </div>
-        </Switch>
-      </PostContext.Provider>
-    </UserContext.Provider>
+    <ThemeContext.Provider value={{ theme: themeName, setTheme }}>
+      <UserContext.Provider value={users}>
+        <PostContext.Provider value={posts}>
+          <Switch>
+            <React.Fragment>
+              <div
+                className="App col-md-12"
+                style={
+                  themeName === "dark"
+                    ? appBackGround.dark
+                    : appBackGround.light
+                }
+              >
+                <a
+                  href="/"
+                  className="app-name"
+                  style={
+                    themeName === "dark"
+                      ? appNameStyle.dark
+                      : appNameStyle.light
+                  }
+                >
+                  Prodigy Design
+                </a>
+                <span className="theme" onClick={toggleTheme}>
+                  {themeName === "dark" ? (
+                    <span className="theme-selector">🌚</span>
+                  ) : (
+                    <span className="theme-selector">🌞</span>
+                  )}
+                </span>
+                <Route path="/" exact component={Home}></Route>
+                <Route path="/posts/:id" exact component={Posts}></Route>
+                <Route path="/posts" exact component={Posts}></Route>
+                <Route
+                  path="/post-details/:id"
+                  exact
+                  component={PostDetails}
+                ></Route>
+              </div>
+            </React.Fragment>
+          </Switch>
+        </PostContext.Provider>
+      </UserContext.Provider>
+    </ThemeContext.Provider>
   );
 };
 

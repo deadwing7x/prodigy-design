@@ -30,11 +30,13 @@
 .users-table {
   width: 800px;
   text-align: center;
-  border: 3px solid black;
+  border: 3px solid;
+  border-color: black;
 }
 
 .table-head {
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid;
+  border-bottom-color: black;
 }
 
 .head {
@@ -43,21 +45,16 @@
 }
 
 .table-column {
-  border-right: 2px solid black;
-  border-bottom: 2px solid black;
+  border-right: 2px solid;
+  border-right-color: black;
+  border-bottom-color: black;
+  border-bottom: 2px solid;
   margin: 1rem 1rem 1rem 1rem;
   font-size: 22px;
   height: 45px;
 }
 
 .blog-links {
-  background: linear-gradient(to right, orange, orange 50%, black 50%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-size: 200% 100%;
-  transition: background-position 800ms ease;
-  background-position: 100%;
   font-family: sans-serif;
   font-weight: 500;
 }

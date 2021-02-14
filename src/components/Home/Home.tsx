@@ -1,21 +1,24 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { CSSProperties, useContext, useEffect, useState } from "react";
 import { IUser } from "../../model/IUser";
+import ThemeContext from "../../ThemeContext";
 import UserContext from "../../UserContext";
 import "./Home.scss";
 
 interface TableProps {
   columns: string[];
   users: IUser[];
+  style: CSSProperties;
+  navLinkStyles: CSSProperties;
 }
 
 const Table: React.FC<TableProps> = (props: TableProps) => {
   return (
-    <table className="users-table">
+    <table className="users-table" style={props.style}>
       <thead className="table-head">
         <tr>
           {props.columns.map((item, i) => {
             return (
-              <th key={i} className="table-column head">
+              <th key={i} className="table-column head" style={props.style}>
                 {item}
               </th>
             );
@@ -26,11 +29,21 @@ const Table: React.FC<TableProps> = (props: TableProps) => {
         {props.users.map((user, i) => {
           return (
             <tr key={i}>
-              <td className="table-column">{i + 1}</td>
-              <td className="table-column">{user.name}</td>
-              <td className="table-column">{user.company.name}</td>
-              <td className="table-column">
-                <a className="blog-links" href={`/posts/:${user.id}`}>
+              <td className="table-column" style={props.style}>
+                {i + 1}
+              </td>
+              <td className="table-column" style={props.style}>
+                {user.name}
+              </td>
+              <td className="table-column" style={props.style}>
+                {user.company.name}
+              </td>
+              <td className="table-column" style={props.style}>
+                <a
+                  className="blog-links"
+                  style={props.navLinkStyles}
+                  href={`/posts/:${user.id}`}
+                >
                   <span title="View blogs posted by this user">
                     View Blogs <i className="fas fa-blog"></i>
                   </span>
@@ -46,8 +59,30 @@ const Table: React.FC<TableProps> = (props: TableProps) => {
 
 const Home: React.FC<{}> = () => {
   const users = useContext(UserContext);
+  const themeType = useContext(ThemeContext);
   const columns: string[] = ["#", "Name", "Company", "Blog Posts"];
   const [filteredUsers, setFilteredUsers] = useState<IUser[]>([]);
+
+  const themeColors: any = {
+    light: {},
+    dark: {
+      borderColor: "#fefefe",
+      borderBottomColor: "#fefefe",
+      borderRightColor: "#fefefe",
+      color: "fefefe",
+    },
+  };
+
+  const navLinksColors: any = {
+    light: {
+      color: "#1a1a1a",
+      textDecoration: 'none'
+    },
+    dark: {
+      color: "#fefefe",
+      textDecoration: 'none'
+    },
+  };
 
   useEffect(() => {
     setFilteredUsers(users);
@@ -106,7 +141,18 @@ const Home: React.FC<{}> = () => {
         />
       </div>
       <div className="col-md-12" id="users">
-        <Table columns={columns} users={filteredUsers} />
+        <Table
+          style={
+            themeType.theme === "dark" ? themeColors.dark : themeColors.light
+          }
+          navLinkStyles={
+            themeType.theme === "dark"
+              ? navLinksColors.dark
+              : navLinksColors.light
+          }
+          columns={columns}
+          users={filteredUsers}
+        />
       </div>
     </div>
   );

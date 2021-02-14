@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
 import PostContext from "../../PostContext";
+import ThemeContext from "../../ThemeContext";
 import UserContext from "../../UserContext";
 import "./Posts.scss";
 
@@ -8,11 +9,25 @@ interface PostProps {
   title: string;
   body: string;
   id: number;
+  theme: string;
 }
 
 const PostContent: React.FC<PostProps> = (props: PostProps) => {
+  const postStyle: any = {
+    light: {
+      borderBottomColor: "black",
+    },
+    dark: {
+      borderBottomColor: "white",
+    },
+  };
+
   return (
-    <div className="single-post" key={props.id}>
+    <div
+      className="single-post"
+      key={props.id}
+      style={props.theme === "dark" ? postStyle.dark : postStyle.light}
+    >
       <div className="post-title">
         {props.title}{" "}
         <a href={`/post-details/:${props.id}`}>
@@ -29,6 +44,7 @@ const Posts: React.FC<{}> = () => {
   id = id?.split(":")[1];
   const posts = useContext(PostContext);
   const users = useContext(UserContext);
+  const themeType = useContext(ThemeContext);
 
   return (
     <div className="col-md-12">
@@ -55,12 +71,18 @@ const Posts: React.FC<{}> = () => {
                     title={post.title}
                     body={post.body}
                     id={post.id}
+                    theme={themeType.theme}
                   />
                 );
               })
           : posts.map((post, i) => {
               return (
-                <PostContent title={post.title} body={post.body} id={post.id} />
+                <PostContent
+                  title={post.title}
+                  body={post.body}
+                  id={post.id}
+                  theme={themeType.theme}
+                />
               );
             })}
       </div>
