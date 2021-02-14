@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import PostContext from "../../PostContext";
 import ThemeContext from "../../ThemeContext";
 import UserContext from "../../UserContext";
@@ -30,9 +30,9 @@ const PostContent: React.FC<PostProps> = (props: PostProps) => {
     >
       <div className="post-title">
         {props.title}{" "}
-        <a href={`/post-details/:${props.id}`}>
+        <Link to={`/post-details/:${props.id}`}>
           <i className="fas fa-external-link-alt fa-xs"></i>
-        </a>
+        </Link>
       </div>
       <div className="post-body">{props.body}</div>
     </div>

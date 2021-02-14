@@ -4,7 +4,7 @@ import Home from "./components/Home/Home";
 import UserContext from "./UserContext";
 import axios from "axios";
 import { IUser } from "./model/IUser";
-import { Route, Switch } from "react-router-dom";
+import { Link, Route, Switch } from "react-router-dom";
 import Posts from "./components/Posts/Posts";
 import { IPost } from "./model/IPost";
 import PostContext from "./PostContext";
@@ -90,8 +90,8 @@ const App: React.FC<{}> = () => {
                     : appBackGround.light
                 }
               >
-                <a
-                  href="/"
+                <Link
+                  to="/"
                   className="app-name"
                   style={
                     themeName === "dark"
@@ -100,7 +100,7 @@ const App: React.FC<{}> = () => {
                   }
                 >
                   Prodigy Design
-                </a>
+                </Link>
                 <span className="theme" onClick={toggleTheme}>
                   {themeName === "dark" ? (
                     <span className="theme-selector">🌚</span>

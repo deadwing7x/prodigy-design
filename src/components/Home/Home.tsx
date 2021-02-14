@@ -1,4 +1,5 @@
 import React, { CSSProperties, useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { IUser } from "../../model/IUser";
 import ThemeContext from "../../ThemeContext";
 import UserContext from "../../UserContext";
@@ -39,15 +40,15 @@ const Table: React.FC<TableProps> = (props: TableProps) => {
                 {user.company.name}
               </td>
               <td className="table-column" style={props.style}>
-                <a
+                <Link
                   className="blog-links"
                   style={props.navLinkStyles}
-                  href={`/posts/:${user.id}`}
+                  to={`/posts/:${user.id}`}
                 >
                   <span title="View blogs posted by this user">
                     View Blogs <i className="fas fa-blog"></i>
                   </span>
-                </a>
+                </Link>
               </td>
             </tr>
           );
