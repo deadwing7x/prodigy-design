@@ -10,6 +10,8 @@ import { IPost } from "./model/IPost";
 import PostContext from "./PostContext";
 import PostDetails from "./components/PostDetails/PostDetails";
 import ThemeContext, { ThemeName } from "./ThemeContext";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
+import Footer from "./components/Footer/Footer";
 
 const App: React.FC<{}> = () => {
   const baseUrl: string = "https://jsonplaceholder.typicode.com";
@@ -120,6 +122,8 @@ const App: React.FC<{}> = () => {
                   exact
                   component={PostDetails}
                 ></Route>
+                <ScrollToTop />
+                <Footer />
               </div>
             </React.Fragment>
           </Switch>
