@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { CSSProperties, useContext, useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -168,7 +169,7 @@ const Home: React.FC<{}> = () => {
     setFilteredUsers(users);
 
     return () => window.removeEventListener("resize", handleResize);
-  }, [users, windowDimensions]);
+  }, [users]);
 
   const searchByInput = (input: string, key: string) => {
     if (input === null) {
@@ -178,13 +179,13 @@ const Home: React.FC<{}> = () => {
     if (key === "name") {
       setFilteredUsers(
         users.filter((user) => {
-          return user.name.toLowerCase().includes(input);
+          return user.name.toLowerCase().includes(input.toLowerCase());
         })
       );
     } else if (key === "company") {
       setFilteredUsers(
         users.filter((user) => {
-          return user.company.name.toLowerCase().includes(input);
+          return user.company.name.toLowerCase().includes(input.toLowerCase());
         })
       );
     }
