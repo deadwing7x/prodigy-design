@@ -1,3 +1,7 @@
+$tablet-width: 768px;
+$largephone-width: 450px;
+$phone-width: 320px;
+
 #home {
   text-align: center;
   font-family: "Montserrat";
@@ -28,7 +32,7 @@
 }
 
 .users-table {
-  width: 800px;
+  width: 900px;
   text-align: center;
   border: 3px solid;
   border-color: black;
@@ -62,4 +66,35 @@
 
 .blog-links:hover {
   background-position: 0 100%;
+}
+
+@media (max-width: #{$tablet-width}) {
+  .users-table {
+    width: inherit;
+  }
+}
+
+@media (max-width: #{$largephone-width}) and (min-width: #{$phone-width}) {
+  .head {
+    font-size: 20px !important;
+  }
+  
+  .table-column {
+    font-size: 18px;
+    height: 25px;
+  }
+  
+  .blog-links {
+    font-size: 16px;
+  }
+
+  .filter-fields {
+    width: 250px;
+    height: 30px;
+    font-size: 20px;
+  }
+  
+  .filter-div {
+    margin-bottom: 1rem;
+  }
 }

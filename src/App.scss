@@ -1,3 +1,6 @@
+$largephone-width: 450px;
+$phone-width: 320px;
+
 .App {
   padding-top: 2rem;
   text-align: center;
@@ -17,9 +20,23 @@
 .theme {
   position: absolute;
   right: 50px;
+  top: 35px;
 }
 
 .theme-selector {
   font-size: 40px;
   cursor: pointer;
+}
+
+@media (max-width: #{$largephone-width}) and (min-width: #{$phone-width}) {
+  .app-name {
+    font-size: 30px;
+    text-decoration: none;
+    font-family: "Montserrat";
+  }
+
+  .theme {
+    right: 25px;
+    top: 25px;
+  }
 }

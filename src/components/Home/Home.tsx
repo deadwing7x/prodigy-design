@@ -111,7 +111,7 @@ const Home: React.FC<{}> = () => {
 
   return (
     <div id="home">
-      <div>
+      <div className='filter-div'>
         <label
           className="labelText"
           id="firstLabel"
