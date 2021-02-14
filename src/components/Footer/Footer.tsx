@@ -7,12 +7,12 @@ const Footer: React.FC<{}> = () => {
 
   return (
     <div className="footer-div">
-      <p className="copyright-text">
+      <div className="copyright-text">
         Copyright © {year}
         <p>
           Designed with <i className="fa fa-heart"></i> by Anubhav
         </p>
-      </p>
+      </div>
     </div>
   );
 };
