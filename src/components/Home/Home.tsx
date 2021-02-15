@@ -169,7 +169,7 @@ const Home: React.FC<{}> = () => {
     setFilteredUsers(users);
 
     return () => window.removeEventListener("resize", handleResize);
-  }, [users]);
+  }, [users, windowDimensions]);
 
   const searchByInput = (input: string, key: string) => {
     if (input === null) {
