@@ -4,7 +4,7 @@ import Home from "./components/Home/Home";
 import UserContext from "./UserContext";
 import axios from "axios";
 import { IUser } from "./model/IUser";
-import { Link, Route, Switch } from "react-router-dom";
+import { Link, Route, Switch, BrowserRouter } from "react-router-dom";
 import Posts from "./components/Posts/Posts";
 import { IPost } from "./model/IPost";
 import PostContext from "./PostContext";
@@ -82,51 +82,53 @@ const App: React.FC<{}> = () => {
     <ThemeContext.Provider value={{ theme: themeName, setTheme }}>
       <UserContext.Provider value={users}>
         <PostContext.Provider value={posts}>
-          <Switch>
-            <React.Fragment>
-              <div
-                className="App col-md-12"
-                style={
-                  themeName === "dark"
-                    ? appBackGround.dark
-                    : appBackGround.light
-                }
-              >
-                <Link
-                  to="/"
-                  className="app-name"
+          <BrowserRouter>
+            <Switch>
+              <React.Fragment>
+                <div
+                  className="App col-md-12"
                   style={
                     themeName === "dark"
-                      ? appNameStyle.dark
-                      : appNameStyle.light
+                      ? appBackGround.dark
+                      : appBackGround.light
                   }
                 >
-                  Prodigy Design
-                </Link>
-                <span className="theme" onClick={toggleTheme}>
-                  {themeName === "dark" ? (
-                    <span className="theme-selector">
-                      <i className="far fa-moon"></i>
-                    </span>
-                  ) : (
-                    <span className="theme-selector">
-                      <i className="far fa-sun"></i>
-                    </span>
-                  )}
-                </span>
-                <Route path="/" exact component={Home}></Route>
-                <Route path="/posts/:id" exact component={Posts}></Route>
-                <Route path="/posts" exact component={Posts}></Route>
-                <Route
-                  path="/post-details/:id"
-                  exact
-                  component={PostDetails}
-                ></Route>
-                <ScrollToTop />
-                <Footer />
-              </div>
-            </React.Fragment>
-          </Switch>
+                  <Link
+                    to="/"
+                    className="app-name"
+                    style={
+                      themeName === "dark"
+                        ? appNameStyle.dark
+                        : appNameStyle.light
+                    }
+                  >
+                    Prodigy Design
+                  </Link>
+                  <span className="theme" onClick={toggleTheme}>
+                    {themeName === "dark" ? (
+                      <span className="theme-selector">
+                        <i className="far fa-moon"></i>
+                      </span>
+                    ) : (
+                      <span className="theme-selector">
+                        <i className="far fa-sun"></i>
+                      </span>
+                    )}
+                  </span>
+                  <Route path="/" exact component={Home}></Route>
+                  <Route path="/posts/:id" exact component={Posts}></Route>
+                  <Route path="/posts" exact component={Posts}></Route>
+                  <Route
+                    path="/post-details/:id"
+                    exact
+                    component={PostDetails}
+                  ></Route>
+                  <ScrollToTop />
+                  <Footer />
+                </div>
+              </React.Fragment>
+            </Switch>
+          </BrowserRouter>
         </PostContext.Provider>
       </UserContext.Provider>
     </ThemeContext.Provider>
